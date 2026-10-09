@@ -10,6 +10,26 @@ release. It uses your working installed WCH platform and compiler, preserving
 any fixes you already made for your Mac. It copies that platform to a separate
 TerrainTronics sketchbook platform; the original WCH installation is unchanged.
 
+
+## WCH core provenance
+
+The TerrainTronics Boards Manager package bundles a snapshot of our working
+WCH Arduino installation, including updates from unreleased WCH development
+code, updated register definitions, and local fixes present in that snapshot.
+It also includes TerrainTronics' Holt Castle pin definitions and automatic
+TT-Bootload reset hook.
+
+Customers do not need to find or install those WCH updates separately, or
+install the WCH board package first. Boards Manager downloads the compiler
+toolchain and standalone uploader as dependencies. Separately installed
+sketchbook libraries and changes outside the packaged platform are not part
+of this snapshot.
+
+The bundled core does not automatically track future WCH releases;
+TerrainTronics incorporates updates through new board-package releases.
+This snapshot is not claimed to match an exact upstream Git commit.
+Original upstream notices are retained.
+
 ## Install on your Mac
 
 Keep your tested executable at `SerialUploader/dist/tt-upload`. In Terminal:

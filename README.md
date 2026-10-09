@@ -14,6 +14,26 @@ Current release: **v0.4**, with a nominal **3-second** entry window. The maintai
 confirmed the basic stock-Arduino compilation and UART upload flow on Holt
 hardware on 9 October 2026. Other chips and boards are not validated.
 
+
+## WCH core provenance
+
+The TerrainTronics Boards Manager package bundles a snapshot of our working
+WCH Arduino installation, including updates from unreleased WCH development
+code, updated register definitions, and local fixes present in that snapshot.
+It also includes TerrainTronics' Holt Castle pin definitions and automatic
+TT-Bootload reset hook.
+
+Customers do not need to find or install those WCH updates separately, or
+install the WCH board package first. Boards Manager downloads the compiler
+toolchain and standalone uploader as dependencies. Separately installed
+sketchbook libraries and changes outside the packaged platform are not part
+of this snapshot.
+
+The bundled core does not automatically track future WCH releases;
+TerrainTronics incorporates updates through new board-package releases.
+This snapshot is not claimed to match an exact upstream Git commit.
+Original upstream notices are retained.
+
 ## How it works
 
 - On entry, listen for the exact ASCII phrase `TT_ENTER_IAP` for 3 seconds.
