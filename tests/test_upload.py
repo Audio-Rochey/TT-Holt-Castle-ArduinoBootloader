@@ -2,7 +2,7 @@ import unittest
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from upload import frame, read_ack
+from SerialUploader.upload import frame, read_ack
 class FakePort:
     def __init__(self, data): self.data=bytearray(data)
     def read(self, n):
