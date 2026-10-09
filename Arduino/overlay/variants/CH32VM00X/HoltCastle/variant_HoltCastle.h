@@ -6,19 +6,20 @@
 #define I2C_MODULE_ENABLED
 #define TIM_MODULE_ENABLED
 
-/* Physical CH32V006F8 pins, with the WCH core's analog pin encoding. */
+/* D0..D8 are provided by WCH's digital-pin enum, not macros here.
+ * The array starts in connector order so those enum values map correctly. */
 #define PA1 PIN_A1
 #define PA2 PIN_A0
-#define PC0 2
-#define PC1 3
-#define PC2 4
-#define PC3 5
+#define PC0 8
+#define PC1 2
+#define PC2 1
+#define PC3 12
 #define PC4 PIN_A2
-#define PC5 7
-#define PC6 8
-#define PC7 9
-#define PD0 10
-#define PD1 11
+#define PC5 5
+#define PC6 7
+#define PC7 6
+#define PD0 0
+#define PD1 16
 #define PD2 PIN_A3
 #define PD3 PIN_A4
 #define PD4 PIN_A7
@@ -31,16 +32,7 @@
 #define NUM_ANALOG_INPUTS 8
 #define ADC_RESOLUTION 12
 
-/* Connector aliases from HoltCastle006PG3p0 schematic. LED is separate from D0. */
-#define D0 PD0
-#define D1 PC2
-#define D2 PC1
-#define D3 PD3
-#define D4 PD4
-#define D5 PC5
-#define D6 PC7
-#define D7 PC6
-#define D8 PC0
+/* Connector ordering is defined in digitalPin[]. LED is separate from D0. */
 #define LED_BUILTIN PD2
 #define HOLT_KEEPALIVE PC4
 #define USER_BTN PNUM_NOT_DEFINED
