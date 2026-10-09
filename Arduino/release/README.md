@@ -2,6 +2,26 @@
 
 This first release targets Apple Silicon Macs. It packages the user's working WCH 1.0.4 platform snapshot and tested standalone UART uploader. Blink, Fade, UART uploads, and the three-second wait after manual reset and cold power-on were confirmed on the Holt Castle. The Boards Manager distribution still needs a clean Mac install test.
 
+
+## WCH core provenance
+
+The TerrainTronics Boards Manager package bundles a snapshot of our working
+WCH Arduino installation, including updates from unreleased WCH development
+code, updated register definitions, and local fixes present in that snapshot.
+It also includes TerrainTronics' Holt Castle pin definitions and automatic
+TT-Bootload reset hook.
+
+Customers do not need to find or install those WCH updates separately, or
+install the WCH board package first. Boards Manager downloads the compiler
+toolchain and standalone uploader as dependencies. Separately installed
+sketchbook libraries and changes outside the packaged platform are not part
+of this snapshot.
+
+The bundled core does not automatically track future WCH releases;
+TerrainTronics incorporates updates through new board-package releases.
+This snapshot is not claimed to match an exact upstream Git commit.
+Original upstream notices are retained.
+
 ## Release files
 
 - `holt-castle-0.1.0.tar.gz`: board core, pin variant, standard linker, and automatic application reset hook.
