@@ -171,6 +171,9 @@ original linker and force a clean rebuild. Do not install the bootloader's
 
 ## One-time bootloader installation
 
+See [Programming TT-Bootload with WCH-LinkE](PROGRAMMING_BOOTLOADER.md) for
+wlink installation, wiring, backups, programming, and readback verification.
+
 Developers/manufacturing use WCH-LinkE through SWIO. Customers do not need it
 once the bootloader and boot configuration are installed.
 
