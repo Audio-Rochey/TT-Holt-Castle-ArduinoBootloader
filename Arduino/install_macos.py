@@ -34,6 +34,8 @@ def validate_core(source):
     for name in required:
         if not (source / name).is_file():
             raise ValueError(f"WCH core is missing {name}; use your working V006 core.")
+    if "--whole-archive" not in (source / "platform.txt").read_text():
+        raise ValueError("WCH link recipe must retain the startup hook with --whole-archive.")
     if not re.search(r"\bWEAK\s+void\s+pre_init\s*\(",
                      (source / "cores/arduino/board.c").read_text()):
         raise ValueError("Expected WCH's weak pre_init() startup hook.")
