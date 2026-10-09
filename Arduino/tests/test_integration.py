@@ -14,6 +14,57 @@ installer = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(installer)
 
 
+@unittest.skipUnless(shutil.which("g++"), "host C++ compiler required")
+class VariantTests(unittest.TestCase):
+    def test_digital_enum_and_analog_indexes(self):
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp)
+            variant = ROOT / "overlay/variants/CH32VM00X/HoltCastle"
+            (path / "pins_arduino.h").write_text('''
+#pragma once
+#include <stdint.h>
+#include "variant_HoltCastle.h"
+// WCH declares its digital names AFTER including the variant header.
+enum {D0,D1,D2,D3,D4,D5,D6,D7,D8,D9,D10,D11,D12,D13,D14,D15,D16,D17};
+#define PIN_A0 192
+#define PIN_A1 193
+#define PIN_A2 194
+#define PIN_A3 195
+#define PIN_A4 196
+#define PIN_A5 197
+#define PIN_A6 198
+#define PIN_A7 199
+enum PinName {PA_1,PA_2,PC_0,PC_1,PC_2,PC_3,PC_4,PC_5,PC_6,PC_7,
+              PD_0,PD_1,PD_2,PD_3,PD_4,PD_5,PD_6,PD_7};
+extern const PinName digitalPin[];
+extern const uint32_t analogInputPin[];
+''')
+            (path / "test.cpp").write_text('''
+#include <cassert>
+#include "pins_arduino.h"
+PinName physical(unsigned pin) {
+    return digitalPin[pin >= 192 ? analogInputPin[pin-192] : pin];
+}
+int main() {
+    assert(physical(D0)==PD_0); assert(physical(D1)==PC_2);
+    assert(physical(D2)==PC_1); assert(physical(D3)==PD_3);
+    assert(physical(D4)==PD_4); assert(physical(D5)==PC_5);
+    assert(physical(D6)==PC_7); assert(physical(D7)==PC_6);
+    assert(physical(D8)==PC_0); assert(physical(LED_BUILTIN)==PD_2);
+    assert(physical(PA2)==PA_2); assert(physical(PA1)==PA_1);
+    assert(physical(PC4)==PC_4); assert(physical(PD3)==PD_3);
+    assert(physical(PD4)==PD_4); assert(physical(PD5)==PD_5);
+    assert(physical(PD6)==PD_6); assert(physical(PD1)==PD_1);
+    assert(physical(PD7)==PD_7);
+}
+''')
+            subprocess.run(["g++", "-Wall", "-Wextra", "-Werror", "-I"+str(path),
+                            "-I"+str(variant), str(variant / "variant_HoltCastle.cpp"),
+                            str(path / "test.cpp"), "-o", str(path / "test")], check=True,
+                           capture_output=True)
+            subprocess.run([str(path / "test")], check=True)
+
+
 class InstallerTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
