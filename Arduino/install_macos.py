@@ -16,8 +16,9 @@ MARKER = "TT_HOLT_INSTALL.json"
 
 
 def find_wch_core():
-    base = Path.home() / "Library/Arduino15/packages/WCH/hardware/ch32"
-    candidates = [p for p in base.glob("*") if (p / "platform.txt").is_file()]
+    base = Path.home() / "Library/Arduino15/packages/WCH/hardware"
+    candidates = [p for arch in ("ch32v", "ch32") for p in (base / arch).glob("*")
+                  if (p / "platform.txt").is_file()]
     if len(candidates) != 1:
         versions = ", ".join(str(p) for p in candidates) or "none found"
         raise ValueError("Select your working WCH installation with --wch-core. "
