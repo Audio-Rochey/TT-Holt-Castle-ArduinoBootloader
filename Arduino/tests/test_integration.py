@@ -75,6 +75,11 @@ class InstallerTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "arm64"):
             installer.validate_uploader(self.uploader)
 
+    def test_requires_hook_retention_in_link_recipe(self):
+        (self.core / "platform.txt").write_text("name=WCH\n")
+        with self.assertRaisesRegex(ValueError, "whole-archive"):
+            self.install()
+
 
 @unittest.skipUnless(shutil.which("gcc") and shutil.which("ar"), "host C compiler required")
 class HookTests(unittest.TestCase):
