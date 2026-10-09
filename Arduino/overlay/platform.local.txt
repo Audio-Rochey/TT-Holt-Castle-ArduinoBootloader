@@ -1,0 +1,16 @@
+name=TerrainTronics Holt Castle
+version=0.1.0
+
+# Keep the installed WCH compiler/build recipes. Only upload is overridden.
+tools.ttupload.path={runtime.platform.path}/tools/ttupload/{ttupload.host}
+ttupload.host.macosx=macos-arm64
+ttupload.host.windows=windows-x86_64
+ttupload.host.linux=linux-x86_64
+tools.ttupload.cmd=tt-upload
+tools.ttupload.cmd.windows=tt-upload.exe
+tools.ttupload.upload.params.verbose=
+tools.ttupload.upload.params.quiet=
+tools.ttupload.upload.pattern="{path}/{cmd}" --port "{upload.port.address}" --baud {upload.speed} "{build.path}/{build.project_name}.bin"
+
+pluggable_discovery.required.0=builtin:serial-discovery
+pluggable_monitor.required.serial=builtin:serial-monitor
