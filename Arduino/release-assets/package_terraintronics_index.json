@@ -75,6 +75,13 @@
               "archiveFileName": "tt-upload-0.1.0-macos-arm64.tar.gz",
               "checksum": "SHA-256:5a8c41259d90519801a678ada5fa7a86f53ab564da8f743ce03751c4c57158d0",
               "size": "7445144"
+            },
+            {
+              "host": "x86_64-mingw32",
+              "url": "https://github.com/Audio-Rochey/TT-Holt-Castle-ArduinoBootloader/releases/download/arduino-0.1.0/tt-upload-0.1.0-windows-x86_64.tar.gz",
+              "archiveFileName": "tt-upload-0.1.0-windows-x86_64.tar.gz",
+              "checksum": "SHA-256:0a3093d6747c96b179fa8a91a6cdb1fddc2a5e2dd945fc9167a4b17866fee38d",
+              "size": "8242729"
             }
           ]
         }
