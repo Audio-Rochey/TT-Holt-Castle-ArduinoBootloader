@@ -1,0 +1,84 @@
+{
+  "packages": [
+    {
+      "name": "TerrainTronics",
+      "maintainer": "TerrainTronics",
+      "websiteURL": "https://terraintronics.com",
+      "email": "",
+      "help": {
+        "online": "https://github.com/Audio-Rochey/TT-Holt-Castle-ArduinoBootloader/issues"
+      },
+      "platforms": [
+        {
+          "name": "TerrainTronics Holt Castle",
+          "architecture": "ch32",
+          "version": "0.1.0",
+          "category": "Contributed",
+          "url": "https://github.com/Audio-Rochey/TT-Holt-Castle-ArduinoBootloader/releases/download/arduino-0.1.0/holt-castle-0.1.0.tar.gz",
+          "archiveFileName": "holt-castle-0.1.0.tar.gz",
+          "checksum": "SHA-256:9a41b204dca4dcf0779eb42c1594e8eb74b84f1a5037ec488a636f02c7f9483e",
+          "size": "983691",
+          "boards": [
+            {
+              "name": "Holt Castle (CH32V006)"
+            }
+          ],
+          "toolsDependencies": [
+            {
+              "packager": "TerrainTronics",
+              "name": "riscv-none-embed-gcc",
+              "version": "8.2.0"
+            },
+            {
+              "packager": "TerrainTronics",
+              "name": "tt-upload",
+              "version": "0.1.0"
+            }
+          ]
+        }
+      ],
+      "tools": [
+        {
+          "name": "riscv-none-embed-gcc",
+          "version": "8.2.0",
+          "systems": [
+            {
+              "host": "i686-mingw32",
+              "url": "https://codeload.github.com/openwch/risc-none-embed-gcc/zip/refs/tags/8.2.0",
+              "archiveFileName": "risc-none-embed-gcc-8.2.0.zip",
+              "checksum": "SHA-256:43DF880A1908C873A8B6AB115568C6BEAEEC41DDADEB5202703B6AA9FDE50626",
+              "size": "267710516"
+            },
+            {
+              "host": "x86_64-linux-gnu",
+              "url": "https://codeload.github.com/TianpeiLee/wch_gcc_8_linux/tar.gz/refs/tags/8.2.0",
+              "archiveFileName": "wch_gcc_8_linux-8.2.0.tar.gz",
+              "checksum": "SHA-256:967FB021E5689FF79A06A71C7E54FB7FACE418D5E9B27EC64F5E56687557A282",
+              "size": "245443061"
+            },
+            {
+              "host": "x86_64-apple-darwin",
+              "url": "https://codeload.github.com/TianpeiLee/wch_gcc_macos/tar.gz/refs/tags/8.2.0",
+              "archiveFileName": "wch_gcc_macos-8.2.0.tar.gz",
+              "checksum": "SHA-256:E14538AE7B621DE798C2466B338A4174CCE22C9CF12E5C1684C0995931738260",
+              "size": "160591401"
+            }
+          ]
+        },
+        {
+          "name": "tt-upload",
+          "version": "0.1.0",
+          "systems": [
+            {
+              "host": "arm64-apple-darwin",
+              "url": "https://github.com/Audio-Rochey/TT-Holt-Castle-ArduinoBootloader/releases/download/arduino-0.1.0/tt-upload-0.1.0-macos-arm64.tar.gz",
+              "archiveFileName": "tt-upload-0.1.0-macos-arm64.tar.gz",
+              "checksum": "SHA-256:5a8c41259d90519801a678ada5fa7a86f53ab564da8f743ce03751c4c57158d0",
+              "size": "7445144"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

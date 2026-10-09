@@ -64,10 +64,7 @@ about three seconds before blinking. Upload the same ordinary sketch again
 using just RESET. This verifies that the hook is retained in a sketch with no
 explicit reference to it. Test a second arbitrary sketch as well.
 
-The new ordinary-sketch build has not yet been tested on the physical Holt or
-compiled with your exact Mac installation. Report any build output before
-changing installed package files. Host tests cover the startup decision and
-installer; the standalone uploader and TT-Bootload flow were already tested.
+Blink, Fade, UART uploads, and the three-second wait after manual reset and cold power-on have been confirmed on the Holt Castle. See [Boards Manager release packaging](release/README.md) for the downloadable Mac package; its clean-install test remains outstanding.
 
 ## How automatic entry is included
 
