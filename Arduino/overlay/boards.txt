@@ -1,0 +1,32 @@
+menu.clock=CPU Clock
+
+holt.name=TerrainTronics Holt Castle (CH32V006, TT-Bootload)
+holt.build.core=arduino
+holt.build.board=HOLT_CASTLE
+holt.build.variant=CH32VM00X/HoltCastle
+holt.build.variant_h=variant_HoltCastle.h
+holt.build.series=CH32VM00X
+holt.build.chip=CH32V006
+holt.build.mcu=QingKe-V2C
+holt.build.march=rv32ecxw
+holt.build.mabi=ilp32e
+holt.build.extra_flags=-DTT_HOLT_BOARD -DARDUINO_HOLT_CASTLE -DCH32V006F8
+holt.build.flags.optimize=-Os
+holt.build.flags.debug=-g
+holt.build.flags.ldflags=--specs=nano.specs --specs=nosys.specs
+holt.build.math_lib_gcc=-lm
+holt.build.IQ_math_RV32=
+holt.build.ch_extra_lib=-lprintf
+holt.upload.maximum_size=63488
+holt.upload.maximum_data_size=8192
+holt.upload.tool=ttupload
+holt.upload.tool.serial=ttupload
+holt.upload.protocol=serial
+holt.upload.speed=460800
+holt.serial.disableDTR=true
+holt.serial.disableRTS=true
+
+holt.menu.clock.48MHz_HSI=48 MHz internal
+holt.menu.clock.48MHz_HSI.build.flags.clock=-DSYSCLK_FREQ_48MHz_HSI=48000000 -DF_CPU=48000000
+holt.menu.clock.24MHz_HSI=24 MHz internal
+holt.menu.clock.24MHz_HSI.build.flags.clock=-DSYSCLK_FREQ_24MHz_HSI=24000000 -DF_CPU=24000000

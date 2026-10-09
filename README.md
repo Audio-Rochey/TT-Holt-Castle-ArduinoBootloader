@@ -7,7 +7,8 @@ using Python and a USB-UART adapter.**
 Install the bootloader once with WCH-LinkE. Customers can then update applications
 without a programmer. No DTR/RTS wiring, Arduino linker changes, or custom Arduino
 board package is required by this bootloader. Each sketch must include the reset
-hook provided in the example.
+hook provided in the example when using the stock WCH board. The new Holt
+board prototype includes that hook automatically; see [Arduino integration](Arduino/README.md).
 
 Current release: **v0.4**, with a nominal **3-second** entry window. The maintainer
 confirmed the basic stock-Arduino compilation and UART upload flow on Holt
@@ -92,7 +93,7 @@ ls /dev/cu.*
 Replace the port and application filename with yours:
 
 ```sh
-python3 upload.py --port /dev/cu.usbmodem04258F0689572 "$HOME/Downloads/CH32V006TTBootloader.ino.bin"
+python3 SerialUploader/upload.py --port /dev/cu.usbmodem04258F0689572 "$HOME/Downloads/CH32V006TTBootloader.ino.bin"
 ```
 
 **Press RESET after the uploader prompts you.** It repeatedly sends the phrase
@@ -133,7 +134,8 @@ UART or wait for the entry phrase.
 
 Every application needs this hook for reset-button entry. An application without
 it can still use cold-power-on entry when BOOT-at-power-on is configured.
-Automatic hook insertion into the Arduino core is future work. Watchdog reset
+The local Holt board prototype automatically includes the hook in its core;
+see [Arduino/README.md](Arduino/README.md). Watchdog reset
 is not defined here as an entry method.
 
 ### Why no application linker changes are needed
@@ -270,8 +272,9 @@ The first-word check detects erased Flash, not a complete valid program.
 Recovery uses cold BOOT entry and a fresh upload on the configured Holt.
 Keep SWIO accessible during development.
 
-No automatic Arduino Upload-button integration or TT board package is included.
-Arduino compiles the application; Python uploads it.
+A local Apple Silicon prototype now integrates the Upload button and automatic
+reset hook. See [Arduino/README.md](Arduino/README.md) for installation and test
+instructions. Public Boards Manager packaging and other hosts remain future work.
 
 ## References and attribution
 
