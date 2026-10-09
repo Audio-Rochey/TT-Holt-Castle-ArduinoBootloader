@@ -41,7 +41,7 @@ jobs:
           "$hash  tt-upload.exe" | Set-Content -Encoding ascii .\dist\SHA256SUMS.txt
 
       - name: Save downloadable build
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: tt-upload-windows-x86_64
           path: |
