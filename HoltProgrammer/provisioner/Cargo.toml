@@ -1,0 +1,8 @@
+[package]
+name = "holt-options"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+wlink = { git = "https://github.com/ch32-rs/wlink", rev = "626d11a2b85a6487b1e81730eade843583526226" }
+anyhow = "1"

@@ -1,0 +1,71 @@
+name: Build Holt Programmer
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'HoltProgrammer/**'
+      - 'firmware/TT_Bootload_Arduino_3s.bin'
+      - '.github/workflows/build-holt-programmer.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-15
+            architecture: arm64
+            artifact: holt-programmer-macos-arm64
+            suffix: ''
+          - os: windows-2022
+            architecture: x64
+            artifact: holt-programmer-windows-x64
+            suffix: '.exe'
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          architecture: ${{ matrix.architecture }}
+      - name: Install Python build dependencies
+        run: python -m pip install -r HoltProgrammer/requirements.txt
+      - name: Check Python and host architecture
+        run: python -c "import platform; print(platform.machine()); assert platform.machine().lower() in ('arm64', 'aarch64') if '${{ matrix.architecture }}' == 'arm64' else platform.machine().lower() in ('amd64', 'x86_64')"
+      - name: Test workflow without hardware
+        run: python -m unittest discover -s HoltProgrammer/tests -v
+      - name: Check out pinned WLINK
+        uses: actions/checkout@v6
+        with:
+          repository: ch32-rs/wlink
+          ref: 626d11a2b85a6487b1e81730eade843583526226
+          path: wlink-source
+      - name: Build native tools
+        run: |
+          cargo build --release --locked --manifest-path wlink-source/Cargo.toml
+          cargo test --locked --manifest-path HoltProgrammer/provisioner/Cargo.toml
+          cargo build --release --locked --manifest-path HoltProgrammer/provisioner/Cargo.toml
+      - name: Package and smoke-test
+        run: python HoltProgrammer/build.py --wlink "wlink-source/target/release/wlink${{ matrix.suffix }}" --options "HoltProgrammer/provisioner/target/release/holt-options${{ matrix.suffix }}"
+      - name: Zip Mac application preserving executable permissions
+        if: runner.os == 'macOS'
+        run: ditto -c -k --sequesterRsrc --keepParent "HoltProgrammer/dist/Holt Programmer.app" "HoltProgrammer/dist/${{ matrix.artifact }}.zip"
+      - name: Zip Windows folder
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: Compress-Archive -Path "HoltProgrammer/dist/Holt Programmer" -DestinationPath "HoltProgrammer/dist/${{ matrix.artifact }}.zip"
+      - name: Save download
+        uses: actions/upload-artifact@v6
+        with:
+          name: ${{ matrix.artifact }}
+          path: HoltProgrammer/dist/${{ matrix.artifact }}.zip
+          if-no-files-found: error
+          retention-days: 30
