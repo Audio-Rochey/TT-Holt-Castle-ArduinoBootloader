@@ -37,9 +37,6 @@ class FakeBoard:
             self.options = boot_options(expected)
             Path(args[3]).write_bytes(self.options)
             return "PASS"
-        args = args[1:]  # --no-detach
-        if args[:2] == ["--chip", "CH32V00X"]:
-            args = args[2:]
         command = args[0]
         if command == "list":
             return "\n".join("WCH-LinkE (RV mode)" for _ in range(self.probes))
@@ -88,6 +85,26 @@ class WorkflowTests(unittest.TestCase):
         self.assertIn("0x1fff0000", flash)
         self.assertIn("--no-run", flash)
         self.assertNotIn("--erase", flash)
+
+    def test_working_cli_arguments_and_default_detach_for_every_operation(self):
+        folder = self.programmer.program(self.firmware)
+        calls = [args for executable, args in self.board.calls if executable == "wlink"]
+        flash = next(args for args in calls if args[0] == "flash")
+        self.assertEqual(flash, ["flash", "--address", "0x1fff0000", "--no-run",
+                                 str(folder / "BOOT-programmed.bin")])
+        for args in calls:
+            self.assertNotIn("--no-detach", args)
+            self.assertNotIn("--chip", args)
+        # The last operation is a normal dump that detaches on successful exit.
+        self.assertEqual(calls[-1], ["dump", "0x1ffff800", "16", "--out",
+                                    str(folder / "options-readback.bin")])
+        self.assertEqual(json.loads((folder / "report.json").read_text())["detach_mode"], "wlink-default")
+
+    def test_connection_check_does_not_leave_no_detach_requested(self):
+        self.programmer.check()
+        self.assert_no_flash()
+        for _, args in self.board.calls:
+            self.assertNotIn("--no-detach", args)
 
     def test_fresh_board_changes_only_boot_bit_and_complement(self):
         original = self.board.options = option_bytes(0xD7)

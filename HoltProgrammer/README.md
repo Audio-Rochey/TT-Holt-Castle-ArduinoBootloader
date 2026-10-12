@@ -1,5 +1,11 @@
 # Holt Programmer
 
+Version 0.1.1 fixes an unnecessary `--no-detach` flag in the original GUI.
+The app now runs the same flash arguments as the working command-line procedure:
+`wlink flash --address 0x1FFF0000 --no-run firmware.bin`. Backups and readbacks
+also use WLINK's normal detach-on-exit behavior. Successful memory verification
+alone does not prove the board will enter IAP; confirm that on hardware.
+
 Prototype desktop installer for Holt Castle **CH32V006F8U6** and **WCH-LinkE**.
 One Python/Qt codebase; separate Apple Silicon macOS and Windows 10/11 x64
 packages. macOS 13 or newer is required by the bundled Qt version.
@@ -46,9 +52,11 @@ It does not automatically remove protection or mass-erase applications. Recovery
 uses WCH tools; there is no blind automatic rollback.
 
 **Check connection** reads the chip and options without flashing. Debug access
-can pause the application; power-cycle before exercising the board. Programming
-keeps the core stopped between steps. Do not swap boards/programmers during an
-operation. The app prevents cancellation/closure and duplicate clicks while busy.
+temporarily pauses the application; WLINK detaches on successful exit. Backups,
+flashing, and readbacks each use this normal command-line lifecycle. Cold
+power-cycle before exercising the bootloader. Do not swap boards/programmers
+during an operation. The app prevents cancellation/closure and duplicate clicks
+while busy. The exact WLINK arguments are recorded in the log.
 
 ## Fresh-board configuration — hardware validation pending
 

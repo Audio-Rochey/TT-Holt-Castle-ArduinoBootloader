@@ -9,7 +9,7 @@ from PySide6.QtGui import QDesktopServices, QFont
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QFileDialog, QFrame,
                               QHBoxLayout, QLabel, QMainWindow, QMessageBox, QPlainTextEdit,
                               QProgressBar, QPushButton, QScrollArea, QLayout, QVBoxLayout, QWidget)
-from backend import Programmer, default_firmware, find_tool, resource_root, run_tool, uart_check
+from backend import APP_VERSION, Programmer, default_firmware, find_tool, resource_root, run_tool, uart_check
 
 
 class Worker(QObject):
@@ -45,7 +45,7 @@ class Worker(QObject):
 class Window(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Holt Programmer")
+        self.setWindowTitle("Holt Programmer " + APP_VERSION)
         self.resize(740, 840)
         self.setMinimumSize(700, 620)
         self.thread = None

@@ -9,6 +9,7 @@ import platform
 import shutil
 import subprocess
 import sys
+from backend import APP_VERSION
 
 ROOT = Path(__file__).resolve().parent
 REVISION = "626d11a2b85a6487b1e81730eade843583526226"
@@ -50,7 +51,7 @@ def main():
                     destination = license_root / package / str(relative)
                     destination.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copy2(source, destination)
-    manifest = {"version": "0.1.0-prototype", "wlink_revision": REVISION, "sha256": {}}
+    manifest = {"version": APP_VERSION + "-prototype", "wlink_revision": REVISION, "sha256": {}}
     for relative in ["vendor/wlink" + suffix, "vendor/holt-options" + suffix,
                      "resources/TT_Bootload_Arduino_3s.bin"]:
         manifest["sha256"][relative] = hashlib.sha256((staging / relative).read_bytes()).hexdigest()

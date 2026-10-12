@@ -19,6 +19,7 @@ BOOT_SIZE = 3328
 OPTIONS = 0x1FFFF800
 CHIP_ID = "00620620"
 WLINK_REV = "626d11a2b85a6487b1e81730eade843583526226"
+APP_VERSION = "0.1.1"
 ANSI = re.compile(r"\x1b\[[0-?]*[ -/]*[@-~]")
 
 
@@ -127,10 +128,12 @@ class Programmer:
         self.session = None
 
     def command(self, *args):
-        globals_ = ["--no-detach"]
-        if args[0] != "list":
-            globals_ += ["--chip", "CH32V00X"]
-        result = self.runner(self.wlink, [*globals_, *args], self.log)
+        # Use the normal CLI lifecycle: attach for the operation, then detach
+        # on successful exit. --no-run skips the reset stage; it is NOT a
+        # reason to keep the debug connection attached with --no-detach.
+        # In particular the final readback must release the debug connection.
+        self.log("WLINK: " + subprocess.list2cmdline(list(map(str, args))))
+        result = self.runner(self.wlink, list(args), self.log)
         # Every attached command must positively identify the same supported part.
         if args[0] != "list":
             ids = re.findall(r"ChipID:\s*0x([0-9a-fA-F]{8})", result)
@@ -175,6 +178,7 @@ class Programmer:
         self.session = Path(tempfile.mkdtemp(prefix=datetime.now().strftime("%Y%m%d-%H%M%S-"), dir=self.backup_root))
         self.log(f"Backup folder: {self.session}")
         report = {"started_utc": datetime.now(timezone.utc).isoformat(), "chip_id": CHIP_ID,
+                  "app_version": APP_VERSION, "detach_mode": "wlink-default",
                   "firmware_file": str(firmware), "firmware_sha256": digest(data),
                   "firmware_bytes": len(data), "wlink_revision": WLINK_REV, "result": "incomplete"}
         report_file = self.session / "report.json"
