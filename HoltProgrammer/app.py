@@ -8,7 +8,7 @@ from PySide6.QtCore import QObject, QThread, Signal, QUrl
 from PySide6.QtGui import QDesktopServices, QFont
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QFileDialog, QFrame,
                               QHBoxLayout, QLabel, QMainWindow, QMessageBox, QPlainTextEdit,
-                              QProgressBar, QPushButton, QVBoxLayout, QWidget)
+                              QProgressBar, QPushButton, QScrollArea, QLayout, QVBoxLayout, QWidget)
 from backend import Programmer, default_firmware, find_tool, resource_root, run_tool, uart_check
 
 
@@ -47,15 +47,20 @@ class Window(QMainWindow):
         super().__init__()
         self.setWindowTitle("Holt Programmer")
         self.resize(740, 840)
-        self.setMinimumSize(700, 820)
+        self.setMinimumSize(700, 620)
         self.thread = None
         self.firmware = default_firmware()
         self.backups = Path.home() / "Documents" / "Holt Programmer Backups"
         self.last_backup = ""
         self.controls = []
         body = QWidget()
-        self.setCentralWidget(body)
+        scroller = QScrollArea()
+        scroller.setWidgetResizable(True)
+        scroller.setFrameShape(QFrame.NoFrame)
+        scroller.setWidget(body)
+        self.setCentralWidget(scroller)
         layout = QVBoxLayout(body)
+        layout.setSizeConstraint(QLayout.SetMinimumSize)
         layout.setContentsMargins(32, 24, 32, 24)
         layout.setSpacing(12)
         title = QLabel("HOLT PROGRAMMER")
