@@ -48,6 +48,15 @@ jobs:
           repository: ch32-rs/wlink
           ref: 626d11a2b85a6487b1e81730eade843583526226
           path: wlink-source
+      - name: Cache native tool builds
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            wlink-source/target
+            HoltProgrammer/provisioner/target
+          key: holt-native-${{ runner.os }}-${{ matrix.architecture }}-${{ hashFiles('HoltProgrammer/provisioner/Cargo.lock', 'wlink-source/Cargo.lock') }}
       - name: Build native tools
         run: |
           cargo build --release --locked --manifest-path wlink-source/Cargo.toml

@@ -19,6 +19,9 @@ def main():
     parser.add_argument("--wlink", required=True, type=Path)
     parser.add_argument("--options", required=True, type=Path)
     args = parser.parse_args()
+    # Arguments are relative to the caller's directory, not the app directory.
+    args.wlink = args.wlink.resolve()
+    args.options = args.options.resolve()
     os.chdir(ROOT)
     if sys.platform not in ("darwin", "win32"):
         parser.error("Build on Apple Silicon macOS or Windows x64")
