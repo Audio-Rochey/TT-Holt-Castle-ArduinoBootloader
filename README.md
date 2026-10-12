@@ -176,6 +176,9 @@ a one-button interface for Apple Silicon Mac and Windows, with bundled tools,
 backups, readback verification, alternative BOOT firmware, and a UART entry test.
 Fresh-board option provisioning is implemented but awaits hardware validation.
 
+See [Programming TT-Bootload with WCH-LinkE](PROGRAMMING_BOOTLOADER.md) for
+wlink installation, wiring, backups, programming, and readback verification.
+
 Developers/manufacturing use WCH-LinkE through SWIO. Customers do not need it
 once the bootloader and boot configuration are installed.
 
