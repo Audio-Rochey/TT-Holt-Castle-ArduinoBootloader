@@ -12,6 +12,33 @@
         {
           "name": "TerrainTronics Holt Castle",
           "architecture": "ch32",
+          "version": "0.1.1",
+          "category": "Contributed",
+          "url": "https://github.com/Audio-Rochey/TT-Holt-Castle-ArduinoBootloader/releases/download/arduino-0.1.1/holt-castle-0.1.1.tar.gz",
+          "archiveFileName": "holt-castle-0.1.1.tar.gz",
+          "checksum": "SHA-256:f01d4212681ace0b2c9eef2a1520627af46f6b3e6719898fddec7467e4e500e8",
+          "size": "982739",
+          "boards": [
+            {
+              "name": "Holt Castle (CH32V006)"
+            }
+          ],
+          "toolsDependencies": [
+            {
+              "packager": "TerrainTronics",
+              "name": "riscv-none-embed-gcc",
+              "version": "8.2.0"
+            },
+            {
+              "packager": "TerrainTronics",
+              "name": "tt-upload",
+              "version": "0.1.0"
+            }
+          ]
+        },
+        {
+          "name": "TerrainTronics Holt Castle",
+          "architecture": "ch32",
           "version": "0.1.0",
           "category": "Contributed",
           "url": "https://github.com/Audio-Rochey/TT-Holt-Castle-ArduinoBootloader/releases/download/arduino-0.1.0/holt-castle-0.1.0.tar.gz",
