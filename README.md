@@ -171,6 +171,11 @@ original linker and force a clean rebuild. Do not install the bootloader's
 
 ## One-time bootloader installation
 
+An experimental [Holt Programmer desktop app](HoltProgrammer/README.md) provides
+a one-button interface for Apple Silicon Mac and Windows, with bundled tools,
+backups, readback verification, alternative BOOT firmware, and a UART entry test.
+Fresh-board option provisioning is implemented but awaits hardware validation.
+
 See [Programming TT-Bootload with WCH-LinkE](PROGRAMMING_BOOTLOADER.md) for
 wlink installation, wiring, backups, programming, and readback verification.
 
